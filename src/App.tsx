@@ -1,5 +1,11 @@
+import { Intro } from "./rtf/Intro.tsx";
+
 function App() {
-  return <div>A</div>;
+  return (
+    <div>
+      <Intro />
+    </div>
+  );
 }
 
 export default App;
