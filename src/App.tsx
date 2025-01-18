@@ -1,10 +1,12 @@
-import { Intro } from "./rtf/Intro.tsx";
+import { FirstScene } from "./rtf/FirstScene.tsx";
+// import { Intro } from "./rtf/Intro.tsx";
 
 function App() {
   return (
-    <div>
-      <Intro />
-    </div>
+    <>
+      {/* <Intro /> */}
+      <FirstScene />
+    </>
   );
 }
 
