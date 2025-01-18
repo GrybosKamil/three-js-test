@@ -1,3 +1,6 @@
-import { firstScene } from "./scenes/firstScene";
+// import { firstScene } from "./scenes/firstScene";
+import { drawingLines } from "./scenes/drawingLines";
 
-firstScene();
+// firstScene();
+
+drawingLines();
