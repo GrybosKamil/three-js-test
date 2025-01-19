@@ -1,24 +1,46 @@
-import { useState, useEffect, Suspense } from "react";
-import { Canvas, useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import { Canvas, useLoader } from "@react-three/fiber";
+import { Suspense, useEffect, useState } from "react";
 import * as THREE from "three";
+
+function getRandomNumberInDefaultRange() {
+  return getRandomNumberInRange(-5, 5);
+}
+
+function getRandomNumberInRange(min: number, max: number) {
+  return Math.random() * (max - min) + min;
+}
 
 const paintings: PaintingProps[] = [
   {
     url: "/paiting/mona-lisa.jpg",
-    position: [-2, 0, 0],
+    initialPosition: new THREE.Vector3(
+      getRandomNumberInDefaultRange(),
+      getRandomNumberInDefaultRange(),
+      getRandomNumberInDefaultRange()
+    ),
   },
   {
     url: "/paiting/last-supper.jpg",
-    position: [0, 0, 0],
+    initialPosition: new THREE.Vector3(
+      getRandomNumberInDefaultRange(),
+      getRandomNumberInDefaultRange(),
+      getRandomNumberInDefaultRange()
+    ),
   },
   {
     url: "/paiting/man.jpg",
-    position: [2, 0, 0],
+    initialPosition: new THREE.Vector3(
+      getRandomNumberInDefaultRange(),
+      getRandomNumberInDefaultRange(),
+      getRandomNumberInDefaultRange()
+    ),
   },
 ];
 
 export function GalleryScene() {
+  const controlPosition = new THREE.Vector3(30, 0, 0);
+
   return (
     <Canvas>
       <ambientLight intensity={0.5} />
@@ -26,20 +48,20 @@ export function GalleryScene() {
         <Painting
           key={painting.url}
           url={painting.url}
-          position={painting.position}
+          initialPosition={painting.initialPosition}
         />
       ))}
-      <OrbitControls />
+      <OrbitControls position={controlPosition} />
     </Canvas>
   );
 }
 
 interface PaintingProps {
   url: string;
-  position: [number, number, number];
+  initialPosition: THREE.Vector3;
 }
 
-function Painting({ url, position }: PaintingProps) {
+function Painting({ url, initialPosition }: PaintingProps) {
   const texture = useLoader(THREE.TextureLoader, url);
   const [dimensions, setDimensions] = useState({ width: 1, height: 1 });
 
@@ -55,9 +77,11 @@ function Painting({ url, position }: PaintingProps) {
   return (
     <Suspense
       key={url + "-suspense"}
-      fallback={<FallbackPaiting key={url + "-fallback"} position={position} />}
+      fallback={
+        <FallbackPaiting key={url + "-fallback"} position={initialPosition} />
+      }
     >
-      <mesh position={position}>
+      <mesh position={initialPosition} name={url}>
         <boxGeometry args={[dimensions.width, dimensions.height, 0.1]} />
         <meshBasicMaterial attach="material-0" color="black" />
         <meshBasicMaterial attach="material-1" color="black" />
@@ -70,7 +94,7 @@ function Painting({ url, position }: PaintingProps) {
   );
 }
 
-function FallbackPaiting({ position }: { position: [number, number, number] }) {
+function FallbackPaiting({ position }: { position: THREE.Vector3 }) {
   return (
     <mesh position={position}>
       <planeGeometry args={[1, 1]} />
