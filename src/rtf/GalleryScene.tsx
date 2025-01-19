@@ -1,18 +1,18 @@
-import React, { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 
 const paintings: PaintingProps[] = [
   {
-    url: "/public/paiting/mona-lisa.jpg",
+    url: "/paiting/mona-lisa.jpg",
     position: [-2, 0, 0],
   },
   {
-    url: "/public/paiting/last-supper.jpg",
+    url: "/paiting/last-supper.jpg",
     position: [0, 0, 0],
   },
   {
-    url: "/public/paiting/man.jpg",
+    url: "/paiting/man.jpg",
     position: [2, 0, 0],
   },
 ];
@@ -21,7 +21,7 @@ export function GalleryScene() {
   return (
     <Canvas>
       <ambientLight intensity={0.5} />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={null}>
         {paintings.map((painting) => (
           <Painting
             key={painting.url}
