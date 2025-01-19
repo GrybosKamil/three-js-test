@@ -1,6 +1,6 @@
 // import { Intro } from "./rtf/Intro.tsx";
 // import { FirstScene } from "./rtf/FirstScene.tsx";
-import { GalleryScene } from "./rtf/GalleryScene.tsx";
+import { GalleryScene } from "./rtf/gallery/GalleryScene.tsx";
 
 function App() {
   return (
