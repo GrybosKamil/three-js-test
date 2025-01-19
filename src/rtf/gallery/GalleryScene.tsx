@@ -1,6 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import * as THREE from "three";
+import { useFrame } from "@react-three/fiber";
+import { useMemo } from "react";
 import { Painting, PaintingProps } from "./Paiting";
 
 const paintings: PaintingProps[] = [
@@ -17,10 +17,24 @@ const paintings: PaintingProps[] = [
 ];
 
 export function GalleryScene() {
-  const controlPosition = new THREE.Vector3(0, 0, 0);
+  const { speed, radius } = useMemo(
+    () => ({
+      speed: Math.random() * 0.1 + 0.1,
+      radius: Math.random() * 0.1,
+    }),
+    []
+  );
+
+  useFrame(({ clock, camera }) => {
+    const elapsedTime = clock.getElapsedTime();
+    camera.position.x = Math.cos(elapsedTime * speed) * radius;
+    camera.position.y = Math.cos(elapsedTime * speed) * radius;
+    camera.position.z = Math.sin(elapsedTime * speed) * radius;
+    camera.lookAt(0, 0, 0);
+  });
 
   return (
-    <Canvas>
+    <>
       <ambientLight intensity={0.5} />
       {paintings.map((painting) => (
         <Painting
@@ -29,7 +43,7 @@ export function GalleryScene() {
           initialPosition={painting.initialPosition}
         />
       ))}
-      <OrbitControls position={controlPosition} />
-    </Canvas>
+      <OrbitControls />
+    </>
   );
 }
