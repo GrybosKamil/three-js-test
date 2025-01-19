@@ -12,9 +12,16 @@ function getRandomNumberInRange(min: number, max: number) {
 }
 
 const paintings: PaintingProps[] = [
-  { url: "/painting/mona-lisa.jpg" },
-  { url: "/painting/last-supper.jpg" },
-  { url: "/painting/man.jpg" },
+  // { url: "/painting/mona-lisa.jpg" },
+  // { url: "/painting/last-supper.jpg" },
+  // { url: "/painting/man.jpg" },
+  { url: "/painting/Kinga/Diana-2024.jpg" },
+  { url: "/painting/Kinga/Koci-demon-2024.jpg" },
+  { url: "/painting/Kinga/Luna-z-bombkami-2024.jpg" },
+  { url: "/painting/Kinga/Madness-3-2024.jpg" },
+  { url: "/painting/Kinga/Marzenie-2024.jpg" },
+  { url: "/painting/Kinga/Samotnosc-duszy-2024.jpg" },
+  { url: "/painting/Kinga/Zmeczony-Kamil-2024.jpg" },
 ];
 
 export function GalleryScene() {
