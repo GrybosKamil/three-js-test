@@ -58,8 +58,13 @@ function Painting({ url, position }: PaintingProps) {
       fallback={<FallbackPaiting key={url + "-fallback"} position={position} />}
     >
       <mesh position={position}>
-        <planeGeometry args={[dimensions.width, dimensions.height]} />
-        <meshBasicMaterial map={texture} />
+        <boxGeometry args={[dimensions.width, dimensions.height, 0.1]} />
+        <meshBasicMaterial attach="material-0" color="black" />
+        <meshBasicMaterial attach="material-1" color="black" />
+        <meshBasicMaterial attach="material-2" color="black" />
+        <meshBasicMaterial attach="material-3" color="black" />
+        <meshBasicMaterial attach="material-4" map={texture} />
+        <meshBasicMaterial attach="material-5" map={texture} />
       </mesh>
     </Suspense>
   );
@@ -69,7 +74,7 @@ function FallbackPaiting({ position }: { position: [number, number, number] }) {
   return (
     <mesh position={position}>
       <planeGeometry args={[1, 1]} />
-      <meshBasicMaterial color="gray" />
+      <meshBasicMaterial color="lightblue" />
     </mesh>
   );
 }
