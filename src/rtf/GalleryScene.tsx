@@ -1,29 +1,23 @@
+import React, { useState, useEffect, Suspense } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
-import { Suspense } from "react";
 import * as THREE from "three";
 
-export function GalleryScene() {
-  const paintings: PaintingProps[] = [
-    {
-      url: "/public/paiting/mona-lisa.jpg",
-      width: 1,
-      height: 1,
-      position: [-2, 0, 0],
-    },
-    {
-      url: "/public/paiting/last-supper.jpg",
-      width: 1,
-      height: 1,
-      position: [0, 0, 0],
-    },
-    {
-      url: "/public/paiting/man.jpg",
-      width: 1,
-      height: 1,
-      position: [2, 0, 0],
-    },
-  ];
+const paintings: PaintingProps[] = [
+  {
+    url: "/public/paiting/mona-lisa.jpg",
+    position: [-2, 0, 0],
+  },
+  {
+    url: "/public/paiting/last-supper.jpg",
+    position: [0, 0, 0],
+  },
+  {
+    url: "/public/paiting/man.jpg",
+    position: [2, 0, 0],
+  },
+];
 
+const GalleryScene = () => {
   return (
     <Canvas>
       <ambientLight intensity={0.5} />
@@ -33,29 +27,37 @@ export function GalleryScene() {
             key={painting.url}
             url={painting.url}
             position={painting.position}
-            width={painting.width}
-            height={painting.height}
           />
         ))}
       </Suspense>
     </Canvas>
   );
-}
+};
 
 interface PaintingProps {
   url: string;
-  width: number;
-  height: number;
   position: [number, number, number];
 }
 
-function Painting({ url, position, width, height }: PaintingProps) {
+function Painting({ url, position }: PaintingProps) {
   const texture = useLoader(THREE.TextureLoader, url);
+  const [dimensions, setDimensions] = useState({ width: 1, height: 1 });
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = url;
+    img.onload = () => {
+      const aspectRatio = img.width / img.height;
+      setDimensions({ width: aspectRatio, height: 1 });
+    };
+  }, [url]);
 
   return (
     <mesh position={position}>
-      <planeGeometry args={[width, height]} />
+      <planeGeometry args={[dimensions.width, dimensions.height]} />
       <meshBasicMaterial map={texture} />
     </mesh>
   );
 }
+
+export default GalleryScene;
