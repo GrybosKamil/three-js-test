@@ -28,12 +28,18 @@ export function Painting({ url, initialPosition }: PaintingProps) {
         getRandomNumberInDefaultRange()
       );
 
+  const rotation = new THREE.Euler(
+    getRandomNumberInRange(0, Math.PI * 2),
+    getRandomNumberInRange(0, Math.PI * 2),
+    getRandomNumberInRange(0, Math.PI * 2)
+  );
+
   return (
     <Suspense
       key={url + "-suspense"}
       fallback={<FallbackPaiting key={url + "-fallback"} position={position} />}
     >
-      <mesh position={position} name={url}>
+      <mesh position={position} name={url} rotation={rotation}>
         <boxGeometry args={[dimensions.width, dimensions.height, 0.1]} />
         <meshBasicMaterial attach="material-0" color="black" />
         <meshBasicMaterial attach="material-1" color="black" />
