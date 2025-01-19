@@ -17,7 +17,7 @@ const paintings: PaintingProps[] = [
   },
 ];
 
-const GalleryScene = () => {
+export function GalleryScene() {
   return (
     <Canvas>
       <ambientLight intensity={0.5} />
@@ -32,7 +32,7 @@ const GalleryScene = () => {
       </Suspense>
     </Canvas>
   );
-};
+}
 
 interface PaintingProps {
   url: string;
@@ -59,5 +59,3 @@ function Painting({ url, position }: PaintingProps) {
     </mesh>
   );
 }
-
-export default GalleryScene;
