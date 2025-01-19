@@ -22,22 +22,12 @@ export function GalleryScene() {
   return (
     <Canvas>
       <ambientLight intensity={0.5} />
-      {paintings.map((painting, index) => (
-        <Suspense
-          key={painting.url + "-suspense"}
-          fallback={
-            <FallbackPaiting
-              key={painting.url + "-fallback"}
-              position={painting.position}
-            />
-          }
-        >
-          <Painting
-            key={painting.url + "-" + index}
-            url={painting.url}
-            position={painting.position}
-          />
-        </Suspense>
+      {paintings.map((painting) => (
+        <Painting
+          key={painting.url}
+          url={painting.url}
+          position={painting.position}
+        />
       ))}
       <OrbitControls />
     </Canvas>
@@ -63,10 +53,15 @@ function Painting({ url, position }: PaintingProps) {
   }, [url]);
 
   return (
-    <mesh position={position}>
-      <planeGeometry args={[dimensions.width, dimensions.height]} />
-      <meshBasicMaterial map={texture} />
-    </mesh>
+    <Suspense
+      key={url + "-suspense"}
+      fallback={<FallbackPaiting key={url + "-fallback"} position={position} />}
+    >
+      <mesh position={position}>
+        <planeGeometry args={[dimensions.width, dimensions.height]} />
+        <meshBasicMaterial map={texture} />
+      </mesh>
+    </Suspense>
   );
 }
 
