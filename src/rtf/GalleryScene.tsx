@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import * as THREE from "three";
 
 function getRandomNumberInDefaultRange() {
-  return getRandomNumberInRange(-5, 5);
+  return getRandomNumberInRange(-3, 3);
 }
 
 function getRandomNumberInRange(min: number, max: number) {
@@ -12,34 +12,13 @@ function getRandomNumberInRange(min: number, max: number) {
 }
 
 const paintings: PaintingProps[] = [
-  {
-    url: "/paiting/mona-lisa.jpg",
-    initialPosition: new THREE.Vector3(
-      getRandomNumberInDefaultRange(),
-      getRandomNumberInDefaultRange(),
-      getRandomNumberInDefaultRange()
-    ),
-  },
-  {
-    url: "/paiting/last-supper.jpg",
-    initialPosition: new THREE.Vector3(
-      getRandomNumberInDefaultRange(),
-      getRandomNumberInDefaultRange(),
-      getRandomNumberInDefaultRange()
-    ),
-  },
-  {
-    url: "/paiting/man.jpg",
-    initialPosition: new THREE.Vector3(
-      getRandomNumberInDefaultRange(),
-      getRandomNumberInDefaultRange(),
-      getRandomNumberInDefaultRange()
-    ),
-  },
+  { url: "/painting/mona-lisa.jpg" },
+  { url: "/painting/last-supper.jpg" },
+  { url: "/painting/man.jpg" },
 ];
 
 export function GalleryScene() {
-  const controlPosition = new THREE.Vector3(30, 0, 0);
+  const controlPosition = new THREE.Vector3(20, 0, 0);
 
   return (
     <Canvas>
@@ -58,7 +37,7 @@ export function GalleryScene() {
 
 interface PaintingProps {
   url: string;
-  initialPosition: THREE.Vector3;
+  initialPosition?: THREE.Vector3;
 }
 
 function Painting({ url, initialPosition }: PaintingProps) {
@@ -74,14 +53,20 @@ function Painting({ url, initialPosition }: PaintingProps) {
     };
   }, [url]);
 
+  const position = initialPosition
+    ? initialPosition
+    : new THREE.Vector3(
+        getRandomNumberInDefaultRange(),
+        getRandomNumberInDefaultRange(),
+        getRandomNumberInDefaultRange()
+      );
+
   return (
     <Suspense
       key={url + "-suspense"}
-      fallback={
-        <FallbackPaiting key={url + "-fallback"} position={initialPosition} />
-      }
+      fallback={<FallbackPaiting key={url + "-fallback"} position={position} />}
     >
-      <mesh position={initialPosition} name={url}>
+      <mesh position={position} name={url}>
         <boxGeometry args={[dimensions.width, dimensions.height, 0.1]} />
         <meshBasicMaterial attach="material-0" color="black" />
         <meshBasicMaterial attach="material-1" color="black" />
