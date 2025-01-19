@@ -1,5 +1,6 @@
 // import { Intro } from "./rtf/Intro.tsx";
 // import { FirstScene } from "./rtf/FirstScene.tsx";
+import { Canvas } from "@react-three/fiber";
 import { GalleryScene } from "./rtf/gallery/GalleryScene.tsx";
 
 function App() {
@@ -7,7 +8,9 @@ function App() {
     <>
       {/* <Intro /> */}
       {/* <FirstScene /> */}
-      <GalleryScene />
+      <Canvas>
+        <GalleryScene />
+      </Canvas>
     </>
   );
 }
