@@ -1,5 +1,6 @@
 import { useState, useEffect, Suspense } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 
 const paintings: PaintingProps[] = [
@@ -30,6 +31,7 @@ export function GalleryScene() {
           />
         ))}
       </Suspense>
+      <OrbitControls />
     </Canvas>
   );
 }
