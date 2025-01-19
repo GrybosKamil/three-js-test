@@ -56,7 +56,7 @@ function FallbackPaiting({ position }: { position: THREE.Vector3 }) {
 }
 
 function getRandomNumberInDefaultRange() {
-  return getRandomNumberInRange(-300, 300);
+  return getRandomNumberInRange(-3, 3);
 }
 
 function getRandomNumberInRange(min: number, max: number) {

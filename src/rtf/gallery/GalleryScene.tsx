@@ -17,7 +17,7 @@ const paintings: PaintingProps[] = [
 ];
 
 export function GalleryScene() {
-  const controlPosition = new THREE.Vector3(100, 0, 0);
+  const controlPosition = new THREE.Vector3(0, 0, 0);
 
   return (
     <Canvas>
