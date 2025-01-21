@@ -8,6 +8,12 @@ export type PaintingProps = {
   initialRotation?: THREE.Euler;
 };
 
+const SPACE_LIMITS = {
+  x: { min: -5, max: 5 },
+  y: { min: -5, max: 5 },
+  z: { min: -5, max: 5 },
+};
+
 export function Painting({
   url,
   initialPosition,
@@ -18,13 +24,13 @@ export function Painting({
 
   const meshRef = useRef<THREE.Mesh>(null);
 
-  const [rotationDirection] = useState<THREE.Euler>(
-    new THREE.Euler(
-      getRandomNumberInRange(-0.005, 0.005),
-      getRandomNumberInRange(-0.005, 0.005),
-      getRandomNumberInRange(-0.005, 0.005)
-    )
+  const rotationDirection = new THREE.Euler(
+    getRandomNumberInRange(-0.005, 0.005),
+    getRandomNumberInRange(-0.005, 0.005),
+    getRandomNumberInRange(-0.005, 0.005)
   );
+
+  let velocity = getNewVelocity();
 
   useEffect(() => {
     const img = new Image();
@@ -56,6 +62,27 @@ export function Painting({
       meshRef.current.rotation.x += rotationDirection.x;
       meshRef.current.rotation.y += rotationDirection.y;
       meshRef.current.rotation.z += rotationDirection.z;
+
+      meshRef.current.position.add(velocity);
+
+      if (
+        meshRef.current.position.x > SPACE_LIMITS.x.max ||
+        meshRef.current.position.x < SPACE_LIMITS.x.min
+      ) {
+        velocity = new THREE.Vector3(-velocity.x, velocity.y, velocity.z);
+      }
+      if (
+        meshRef.current.position.y > SPACE_LIMITS.y.max ||
+        meshRef.current.position.y < SPACE_LIMITS.y.min
+      ) {
+        velocity = new THREE.Vector3(velocity.x, -velocity.y, velocity.z);
+      }
+      if (
+        meshRef.current.position.z > SPACE_LIMITS.z.max ||
+        meshRef.current.position.z < SPACE_LIMITS.z.min
+      ) {
+        velocity = new THREE.Vector3(velocity.x, velocity.y, -velocity.z);
+      }
     }
   });
 
@@ -83,6 +110,14 @@ function FallbackPaiting({ position }: { position: THREE.Vector3 }) {
       <planeGeometry args={[1, 1]} />
       <meshBasicMaterial color="lightblue" />
     </mesh>
+  );
+}
+
+function getNewVelocity() {
+  return new THREE.Vector3(
+    getRandomNumberInRange(-0.01, 0.01),
+    getRandomNumberInRange(-0.01, 0.01),
+    getRandomNumberInRange(-0.01, 0.01)
   );
 }
 
