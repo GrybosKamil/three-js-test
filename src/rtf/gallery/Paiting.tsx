@@ -24,13 +24,17 @@ export function Painting({
 
   const meshRef = useRef<THREE.Mesh>(null);
 
-  const rotationDirection = new THREE.Euler(
-    getRandomNumberInRange(-0.005, 0.005),
-    getRandomNumberInRange(-0.005, 0.005),
-    getRandomNumberInRange(-0.005, 0.005)
-  );
+  const rotationDirection = generateRotationDirection();
 
-  let velocity = getNewVelocity();
+  let velocity = generateVelocity();
+
+  const position = initialPosition
+    ? initialPosition
+    : generateInitialPosition();
+
+  const rotation = initialRotation
+    ? initialRotation
+    : generateInitialRotation();
 
   useEffect(() => {
     const img = new Image();
@@ -40,22 +44,6 @@ export function Painting({
       setDimensions({ width: aspectRatio, height: 1 });
     };
   }, [url]);
-
-  const position = initialPosition
-    ? initialPosition
-    : new THREE.Vector3(
-        getRandomNumberInDefaultRange(),
-        getRandomNumberInDefaultRange(),
-        getRandomNumberInDefaultRange()
-      );
-
-  const rotation = initialRotation
-    ? initialRotation
-    : new THREE.Euler(
-        getRandomNumberInRange(0, Math.PI * 2),
-        getRandomNumberInRange(0, Math.PI * 2),
-        getRandomNumberInRange(0, Math.PI * 2)
-      );
 
   useFrame(() => {
     if (meshRef.current) {
@@ -113,18 +101,42 @@ function FallbackPaiting({ position }: { position: THREE.Vector3 }) {
   );
 }
 
-function getNewVelocity() {
-  return new THREE.Vector3(
-    getRandomNumberInRange(-0.01, 0.01),
-    getRandomNumberInRange(-0.01, 0.01),
-    getRandomNumberInRange(-0.01, 0.01)
-  );
-}
-
 function getRandomNumberInDefaultRange() {
   return getRandomNumberInRange(-3, 3);
 }
 
 function getRandomNumberInRange(min: number, max: number) {
   return Math.random() * (max - min) + min;
+}
+
+function generateRotationDirection() {
+  return new THREE.Euler(
+    getRandomNumberInRange(-0.005, 0.005),
+    getRandomNumberInRange(-0.005, 0.005),
+    getRandomNumberInRange(-0.005, 0.005)
+  );
+}
+
+function generateInitialRotation() {
+  return new THREE.Euler(
+    getRandomNumberInRange(0, Math.PI * 2),
+    getRandomNumberInRange(0, Math.PI * 2),
+    getRandomNumberInRange(0, Math.PI * 2)
+  );
+}
+
+function generateInitialPosition() {
+  return new THREE.Vector3(
+    getRandomNumberInDefaultRange(),
+    getRandomNumberInDefaultRange(),
+    getRandomNumberInDefaultRange()
+  );
+}
+
+function generateVelocity() {
+  return new THREE.Vector3(
+    getRandomNumberInRange(-0.01, 0.01),
+    getRandomNumberInRange(-0.01, 0.01),
+    getRandomNumberInRange(-0.01, 0.01)
+  );
 }
