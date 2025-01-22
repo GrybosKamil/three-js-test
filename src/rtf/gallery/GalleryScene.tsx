@@ -13,6 +13,20 @@ const paintings: PaintingProps[] = [
   { url: "/painting/Kinga/Marzenie-2024.jpg" },
   { url: "/painting/Kinga/Samotnosc-duszy-2024.jpg" },
   { url: "/painting/Kinga/Zmeczony-Kamil-2024.jpg" },
+  { url: "/painting/Kinga/Bodzio-z-sasiadem-2022.jpg" },
+  { url: "/painting/Kinga/Gucio-z-ogorkiem-2023.jpg" },
+  { url: "/painting/Kinga/Kamus-z-Bodziem-2023.jpg" },
+  { url: "/painting/Kinga/Kompozycja-z-tabletek-2023.jpg" },
+  { url: "/painting/Kinga/Kosmo-akwarium-2024.jpg" },
+  { url: "/painting/Kinga/Koty-2022.jpg" },
+  { url: "/painting/Kinga/Koty-nocy-2023.jpg" },
+  { url: "/painting/Kinga/Kroliczek-2023.jpg" },
+  { url: "/painting/Kinga/Madness-2-2024.jpg" },
+  { url: "/painting/Kinga/Oni-patrza-2024.jpg" },
+  { url: "/painting/Kinga/W-szklarni-pani-Ani-2024.jpg" },
+  { url: "/painting/Kinga/Wciaz-zywa-w-srodku-martwa-2020.jpg" },
+  { url: "/painting/Kinga/Zakile-2024.jpg" },
+  { url: "/painting/Kinga/Zamyslona-2022.jpg" },
 ];
 
 export function GalleryScene() {
