@@ -74,12 +74,22 @@ export function Painting({
     }
   });
 
+  const handleClick = () => {
+    console.log(`Painting clicked: ${url}`);
+  };
+
   return (
     <Suspense
       key={url + "-suspense"}
       fallback={<FallbackPaiting key={url + "-fallback"} position={position} />}
     >
-      <mesh ref={meshRef} position={position} name={url} rotation={rotation}>
+      <mesh
+        ref={meshRef}
+        name={url}
+        position={position}
+        rotation={rotation}
+        onClick={handleClick}
+      >
         <boxGeometry args={[dimensions.width, dimensions.height, 0.1]} />
         <meshBasicMaterial attach="material-0" color="black" />
         <meshBasicMaterial attach="material-1" color="black" />
